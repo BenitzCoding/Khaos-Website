@@ -1,60 +1,66 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+import uvicorn
+import cv2
 import os
 
-web = Flask(__name__)
+web = FastAPI()
+templates = Jinja2Templates(directory="templates")
 
-@web.route('/')
-def index():
-	return render_template('index.html')
+@web.get('/')
+async def index(request: Request):
+	return templates.TemplateResponse('index.html', {'request': request})
 
-@web.route('/home')
-def home():
-	return render_template('index.html')
+@web.get('/home')
+async def home(request: Request):
+	return templates.TemplateResponse('index.html', {'request': request})
 
-@web.route('/tos')
-def tos():
-	return render_template('terms.html')
+@web.get('/tos')
+async def tos(request: Request):
+	return templates.TemplateResponse('terms.html', {'request': request})
 
-@web.route('/terms')
-def terms():
-	return render_template('terms.html')
+@web.get('/terms')
+async def terms(request: Request):
+	return templates.TemplateResponse('terms.html', {'request': request})
 
-@web.route('/privacy')
-def privacy():
-	return render_template('privacy.html')
+@web.get('/privacy')
+async def privacy(request: Request):
+	return templates.TemplateResponse('privacy.html', {'request': request})
 
-@web.route('/policy')
-def policy():
-	return render_template('privacy.html')
+@web.get('/policy')
+async def policy(request: Request):
+	return templates.TemplateResponse('privacy.html', {'request': request})
 
-@web.route('/discord')
-def discord():
-	return render_template('discord.html')
+@web.get('/discord')
+async def discord(request: Request):
+	return templates.TemplateResponse('discord.html', {'request': request})
 
-@web.route('/github')
-def github():
-	return render_template('github.html')
+@web.get('/github')
+async def github(request: Request):
+	return templates.TemplateResponse('github.html'), {'request': request}
 
-@web.route('/partner')
-def partner():
-	return render_template('partner.html')
+@web.get('/partner')
+async def partner(request: Request):
+	return templates.TemplateResponse('partner.html', {'request': request})
 
-@web.route('/apply')
-def apply():
-	return render_template('apply.html')
+@web.get('/apply')
+async def apply(request: Request):
+	return templates.TemplateResponse('apply.html', {'request': request})
 
-@web.route('/devs/pings/refresh')
-def refresh():
+@web.get('/devs/pings/refresh')
+async def refresh(request: Request):
 	os.system('ls -l; git pull origin main')
-	return render_template('refresh.html')
+	return templates.TemplateResponse('refresh.html')
 
-@web.errorhandler(404)
-def page_not_found(e):
-	return render_template('404.html'), 404
+# @web.errorhandler(404)
+# async def page_not_found(e):
+# 	return templates.TemplateResponse('404.html'), 404
 
-@web.errorhandler(500)
-def error(e):
-	print(e)
-	return render_template('500.html'), 500
+# @web.errorhandler(500)
+# async def error(e):
+# 	print(e)
+# 	return templates.TemplateResponse('500.html'), 500
 
-web.run(host="127.0.0.1", port=2000)
+if __name__ == '__main__':
+	uvicorn.run(web, host="127.0.0.1", port=2000)
