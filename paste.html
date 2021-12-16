@@ -6,21 +6,10 @@
 		</title>
 	</head>
 	<body>
-		<form mame="myForm">
+		<form action="https://api.senarc.org/paste" method="GET" name="myForm">
 			<label for="content">Paste Below:</label>
 			<input type="text" name="content" id="content">
 			<input value="Process" type="submit">
 		</form>
 	</body>
-	<script>
-		var formData = JSON.stringify($("#myForm").serializeArray());
-		$.ajax({
-			type: "POST",
-			url: "https://api.senarc.org/paste",
-			data: formData,
-			success: function(){},
-			dataType: "json",
-			contentType : "application/json"
-		});
-	</script>
 </html>
