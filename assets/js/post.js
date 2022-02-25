@@ -15,8 +15,10 @@ async function submitForm(e, form) {
     setTimeout(() => btnSubmit.disabled = false, 2000);
     // 2.2 Build JSON body
     const jsonFormData = buildJsonFormData(form);
+
+    const emptyHeaders = {};
     // 2.4 Request & Response
-    const response = await fetchService.performPostHttpRequest(`https://api.senarc.org/paste`, jsonFormData); // Uses JSON Placeholder
+    const response = await fetchService.performPostHttpRequest(`https://api.senarc.org/paste`, emptyHeaders, jsonFormData); // Uses JSON Placeholder
     console.log(response);
     // 2.5 Inform user of result
     if(response)
